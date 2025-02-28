@@ -15,5 +15,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var();
+  font-family: var(--font-nunito), sans-serif;
 }
