@@ -3,7 +3,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="font-nunito text-center">
+    <div className="font-nunito ">
       Welcome to your dashboard
       <Link href="/dashboard/about">About Page</Link>
     </div>
