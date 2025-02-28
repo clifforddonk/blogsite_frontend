@@ -3,9 +3,8 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="font-nunito">
-      Welcome to your dashboard
-      <Link href="/dashboard/about">About Page</Link>
+    <div>
+      <Link href="/dashboard/user">return to user dashboard</Link>
     </div>
   );
 };
