@@ -5,9 +5,7 @@ const page = () => {
   return (
     <div>
       This is the homepage
-      <Link href="/user/dashboard">
-        <button>click here for dashboard</button>
-      </Link>
+      <Link href="/user/dashboard">click here for dashboard</Link>
     </div>
   );
 };
