@@ -1,5 +1,6 @@
 "use client";
 import { Home, PlusCircle, Users, LogOut } from "lucide-react";
+import Link from "next/link";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
@@ -25,35 +26,26 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         {/* Navigation */}
         <nav className="">
-          <ul className="space-y-2 px-2">
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded-md hover:bg-gray-700"
-              >
+          <div className="space-y-2 px-2">
+            <Link href="">
+              <div className="flex items-center p-3 rounded-md hover:bg-gray-700">
                 <Home className="text-gray-300" size={20} />
                 <span className="ml-4">Posts</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded-md hover:bg-gray-700"
-              >
+              </div>
+            </Link>
+            <Link href="">
+              <div className="flex items-center p-3 rounded-md hover:bg-gray-700">
                 <PlusCircle className="text-gray-300" size={20} />
                 <span className="ml-4">Create Post</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-3 rounded-md hover:bg-gray-700"
-              >
+              </div>
+            </Link>
+            <Link href="">
+              <div className="flex items-center p-3 rounded-md hover:bg-gray-700">
                 <Users className="text-gray-300" size={20} />
                 <span className="ml-4">Contributors</span>
-              </a>
-            </li>
-          </ul>
+              </div>
+            </Link>
+          </div>
         </nav>
 
         {/* Logout Button */}
