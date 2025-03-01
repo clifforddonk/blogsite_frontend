@@ -1,5 +1,6 @@
 "use client";
 import { Home, PlusCircle, Users, LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -50,7 +51,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         {/* Logout Button */}
         <div className="absolute bottom-0 w-full p-2">
-          <button className="flex items-center w-full p-3 rounded-md hover:bg-gray-700">
+          <button
+            className="flex items-center w-full p-3 rounded-md hover:bg-gray-700 cursor-pointer"
+            onClick={() => signOut({ callbackUrl: "/auth/login" })}
+          >
             <LogOut className="text-red-400" size={20} />
             <span className="ml-4 text-red-400">Logout</span>
           </button>
