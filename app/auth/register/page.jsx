@@ -38,7 +38,7 @@ const SignUpForm = () => {
       const data = await response.json();
 
       if (response.ok) {
-        router.push("/auth/login");
+        router.push("/dashboard/user");
       } else {
         setError(data.error || "Error creating user");
       }
@@ -56,7 +56,9 @@ const SignUpForm = () => {
 
         {/* Google Sign-in Button */}
         <button
-          onClick={() => signIn("google")}
+          onClick={
+            () => signIn("google", { callbackUrl: "/dashboard/user" }) // Add callbackUrl here
+          }
           className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 mb-6 cursor-pointer"
         >
           <FcGoogle className="size-6 mx-1" />
@@ -152,7 +154,7 @@ const SignUpForm = () => {
           Already have an account?
           <Link href="/auth/login">
             <span className="font-medium text-blue-600 hover:text-blue-500 hover:underline">
-              Sign in
+              Log In
             </span>
           </Link>
         </p>
