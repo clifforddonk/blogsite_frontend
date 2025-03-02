@@ -65,11 +65,13 @@ const LoginForm = () => {
 
         {/* Google Sign-in Button */}
         <button
-          onClick={() => signIn("google")}
+          onClick={
+            () => signIn("google", { callbackUrl: "/dashboard/user" }) // Add callbackUrl here
+          }
           className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 mb-6 cursor-pointer"
         >
           <FcGoogle className="size-6 mx-1" />
-          Sign in with Google
+          Log in with Google
         </button>
 
         <div className="relative my-6">
@@ -131,7 +133,7 @@ const LoginForm = () => {
             type="submit"
             className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm  font-semibold text-gray-100 bg-blue-600 hover:bg-blue-700 cursor-pointer"
           >
-            Sign in
+            Log in
           </button>
         </form>
 
