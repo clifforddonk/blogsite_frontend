@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma"; // Import Prisma Client
+
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
