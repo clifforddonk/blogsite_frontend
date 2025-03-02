@@ -1,72 +1,64 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter"; // Use @next-auth/prisma-adapter
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs"; // Use bcryptjs instead of bcrypt
-
-// Initialize Prisma Client
-const prisma = new PrismaClient();
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import prisma from "@/lib/prisma";
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma), // Use the Prisma adapter
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      httpOptions: {
-        timeout: 10000, // Increase timeout for OAuth requests
-      },
-    }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-
-        // Find the user by email
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
-
-        // If user doesn't exist or doesn't have a password, return null
-        if (!user || !user.password) return null;
-
-        // Compare the provided password with the hashed password
-        const passwordMatch = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        // If passwords don't match, return null
-        if (!passwordMatch) return null;
-
-        // Return the user object if everything is valid
-        return user;
-      },
     }),
   ],
   callbacks: {
-    async session({ session, token }) {
-      // Add the user ID to the session
-      if (session.user) {
-        session.user.id = token.sub;
+    async signIn({ user, account, profile }) {
+      if (account.provider === "google") {
+        const { email } = user;
+
+        // Check if the user already exists in the database
+        const existingUser = await prisma.user.findUnique({
+          where: { email },
+        });
+
+        // If the user exists and has a password (email/password account), block the sign-in
+        if (existingUser && existingUser.password) {
+          return "/auth/error?error=OAuthAccountNotLinked"; // Redirect to an error page
+        }
+
+        // If the user doesn't exist, create a new user
+        if (!existingUser) {
+          await prisma.user.create({
+            data: {
+              name: user.name,
+              email: user.email,
+              image: user.image,
+              accounts: {
+                create: {
+                  type: "oauth",
+                  provider: account.provider,
+                  providerAccountId: account.providerAccountId,
+                  refresh_token: account.refresh_token,
+                  access_token: account.access_token,
+                  expires_at: account.expires_at,
+                  token_type: account.token_type,
+                  scope: account.scope,
+                  id_token: account.id_token,
+                  session_state: account.session_state,
+                },
+              },
+            },
+          });
+
+          return true; // Allow the sign-in
+        }
       }
-      return session;
-    },
-    async jwt({ token, user }) {
-      // Add the user ID to the JWT token
-      if (user) {
-        token.sub = user.id;
-      }
-      return token;
+
+      return true; // Allow sign-in for other providers
     },
   },
-  secret: process.env.NEXTAUTH_SECRET, // Ensure this is set in your .env file
-  debug: true, // Enable debugging for development
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === "development",
 };
 
 const handler = NextAuth(authOptions);
