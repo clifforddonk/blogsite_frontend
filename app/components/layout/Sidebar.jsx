@@ -16,8 +16,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-screen bg-gray-800 text-white z-20 transform transition-all duration-300 ${
-          isOpen ? "w-64" : "w-0 lg:w-64"
+        className={`fixed top-0 left-0 h-full bg-gray-800 text-white z-20 transform transition-all duration-300 ${
+          isOpen ? "w-72" : "w-0 lg:w-64"
         } overflow-hidden lg:relative`}
       >
         {/* Dashboard title */}
@@ -28,7 +28,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Navigation */}
         <nav className="">
           <div className="space-y-2 px-2">
-            <Link href="">
+            <Link
+              href="/dashboard
+            "
+            >
               <div className="flex items-center p-3 rounded-md hover:bg-gray-700">
                 <Home className="text-gray-300" size={20} />
                 <span className="ml-4">Posts</span>
