@@ -5,47 +5,73 @@ export const registerUser = async (userData) => {
   try {
     const response = await axiosInstance.post("/auth/register", userData);
     console.log("Register Response:", response.data); // Debugging
-    return response.data;
-  } catch (error) {
-    // Extract a meaningful error message
-    const errorMessage =
-      error.response?.data?.message ||
-      error.response?.data ||
-      error.message ||
-      "Registration failed!";
 
+    return response.data; // This will contain "User registered successfully!"
+  } catch (error) {
+    const errorMessage = error.response?.data || "Registration failed!";
     console.error("Registration Error:", errorMessage);
-    throw errorMessage; // Throw a string instead of an error object
+    throw errorMessage; // Throw the correct error message
   }
 };
 
 // Login a user
-export const loginUser = async (username, password) => {
+export const loginUser = async (email, password) => {
   try {
     const response = await axiosInstance.post("/auth/login", {
       email,
       password,
     });
 
-    console.log("Login Response:", response.data.message); // Debugging
+    console.log("Login Response:", response.data); // Debugging
 
-    if (response.data.token) {
-      localStorage.setItem("token", response.data.token); // Store token safely
-    } else {
-      throw new Error("Invalid token received from server!");
+    if (!response.data || !response.data.token) {
+      throw new Error("Invalid response from server!");
     }
 
-    return response.data;
+    localStorage.setItem("token", response.data.token); // Store token safely
+
+    return response.data.message; // Return "Login successful!"
   } catch (error) {
-    // Extract a meaningful error message
-    const errorMessage =
-      error.response?.data?.message ||
-      console.error("Login Error:", errorMessage);
-    throw errorMessage; // Throw a string instead of an error object
+    const errorMessage = error.response?.data || "Login failed!";
+    console.error("Login Error:", errorMessage);
+    throw errorMessage; // Throw correct error
   }
 };
 
-// Logout user
-export const logoutUser = () => {
-  localStorage.removeItem("token");
+export const getAllUsers = async () => {
+  try {
+    const response = await axiosInstance.get("/api/users");
+    return response.data; // Returns an array of users
+  } catch (error) {
+    console.error("Fetch Users Error:", error.response?.data || error.message);
+    throw error.response?.data || "Failed to fetch users.";
+  }
 };
+
+export const getFilteredUsers = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found, redirecting...");
+      return null;
+    }
+
+    const userEmail = JSON.parse(atob(token.split(".")[1])).sub; // Decode JWT (assuming sub=email)
+    const allUsers = await getAllUsers(); // Fetch all users
+
+    // Find the user object by matching email
+    const userObject = allUsers.find((user) => user.email === userEmail);
+
+    if (!userObject) {
+      console.error("User not found in database!");
+      return null;
+    }
+
+    console.log("Logged-in User Details:", userObject);
+    return userObject; // Now you have the full user object, including the ID
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
+};
+// Logout user
