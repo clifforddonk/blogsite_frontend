@@ -1,4 +1,5 @@
 import axiosInstance from "@/lib/axios/axiosInstance";
+import { redirect } from "next/navigation";
 
 // Register a new user
 export const registerUser = async (userData) => {
@@ -52,8 +53,8 @@ export const getFilteredUsers = async () => {
   try {
     const token = localStorage.getItem("token");
     if (!token) {
-      console.error("No token found, redirecting...");
-      return null;
+      console.error("Session Expired, redirecting...");
+      window.location.href = "/auth/login";
     }
 
     const userEmail = JSON.parse(atob(token.split(".")[1])).sub; // Decode JWT (assuming sub=email)
