@@ -55,7 +55,6 @@ export default function Home() {
       );
 
       if (response) {
-        console.log("Post created:", response);
         alert("Post created successfully!");
         // Reset form after successful submission
         setFormData({ title: "", content: "" });
@@ -67,7 +66,6 @@ export default function Home() {
         throw new Error("Post creation failed");
       }
     } catch (error) {
-      console.error("Error creating post:", error);
       alert("Failed to create post.");
     } finally {
       setLoading(false);
@@ -86,7 +84,7 @@ export default function Home() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Title Input */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700 flex items-center">
+            <label className=" text-sm font-medium text-gray-700 flex items-center">
               <Type className="w-4 h-4 mr-1" /> Title
             </label>
             <input
@@ -102,7 +100,7 @@ export default function Home() {
 
           {/* Content Textarea */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700 flex items-center">
+            <label className=" text-sm font-medium text-gray-700 flex items-center">
               <FileText className="w-4 h-4 mr-1" /> Content
             </label>
             <textarea
@@ -120,7 +118,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Image Upload */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 flex items-center">
+              <label className=" text-sm font-medium text-gray-700 flex items-center">
                 <Image className="w-4 h-4 mr-1" /> Image (optional)
               </label>
               <div className="flex items-center">
@@ -152,7 +150,7 @@ export default function Home() {
 
             {/* Video Upload */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 flex items-center">
+              <label className=" text-sm font-medium text-gray-700 flex items-center">
                 <Video className="w-4 h-4 mr-1" /> Video (optional)
               </label>
               <div className="flex items-center">
