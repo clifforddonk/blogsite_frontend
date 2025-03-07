@@ -23,7 +23,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed lg:sticky top-0 left-0 h-screen bg-gray-800 text-white z-20 transform transition-all duration-300 ${
+        className={`fixed lg:sticky top-0 left-0 h-full lg:h-screen bg-gray-800 text-white z-20 transform transition-all duration-300 ${
           isOpen ? "w-72" : "w-0 lg:w-64"
         } overflow-y-auto lg:overflow-y-visible lg:translate-x-0`}
       >
