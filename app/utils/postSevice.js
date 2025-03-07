@@ -94,6 +94,30 @@ export const postService = {
       return false;
     }
   },
+
+  updateUser: async (id, userData) => {
+    try {
+      const response = await axiosInstance.put(`/api/users/${id}`, userData, {
+        headers: {
+          "Content-Type": "application/json", // Ensure JSON request
+        },
+      });
+      return response.data; // Return the updated user data
+    } catch (error) {
+      console.error("Error Updating User:", error.response?.data || error);
+      return false;
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      const response = await axiosInstance.delete(`/api/users/${id}`);
+      return response.status === 200; // Ensure it returns true only on success
+    } catch (error) {
+      console.error("Error deleting User:", error.response?.data || error);
+      return false;
+    }
+  },
 };
 
 export default postService;
