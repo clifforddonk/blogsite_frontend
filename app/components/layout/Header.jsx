@@ -40,7 +40,7 @@ const Header = ({ toggleSidebar }) => {
   )}&background=random&color=fff`;
 
   return (
-    <div className="flex items-center justify-between bg-white shadow-md p-4">
+    <div className="flex items-center justify-between bg-white shadow-md p-4 w-full">
       {/* Sidebar Toggler */}
       <button
         onClick={toggleSidebar}
@@ -75,7 +75,7 @@ const Header = ({ toggleSidebar }) => {
               <ul className="text-gray-700">
                 <li>
                   <Link
-                    href="/dashboard/user/profile"
+                    href="/dashboard/profile"
                     className="block px-4 py-2 hover:bg-gray-200"
                     onClick={closeDropdown}
                   >
