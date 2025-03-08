@@ -1,16 +1,31 @@
 "use client";
 import { Home, PlusCircle, Users, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { getFilteredUsers } from "../../utils/authService";
 import Link from "next/link";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const router = useRouter();
-
+  const [user, setUser] = useState(null); // Store a single user object
   const logoutUser = () => {
     localStorage.removeItem("token");
     router.push("/auth/login"); // Redirect to login page after logout
   };
 
+  useEffect(() => {
+    const fetchFilteredUser = async () => {
+      const filteredUser = await getFilteredUsers();
+      if (filteredUser) {
+        setUser(filteredUser);
+      }
+    };
+
+    fetchFilteredUser();
+  }, []);
+
+  const role = user?.role;
+  console.log(role);
   return (
     <>
       {/* Sidebar Overlay (closes sidebar when clicked outside) */}
@@ -29,7 +44,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       >
         {/* Dashboard title */}
         <div className="p-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold">Dashboard</h1>
+          <h1 className="text-xl font-bold">My Blog</h1>
         </div>
 
         {/* Navigation */}
@@ -41,7 +56,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <span className="ml-4">Posts</span>
               </div>
             </Link>
-            <Link href="/dashboard/user/create-post">
+            <Link href="/dashboard/create-post">
               <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
                 <PlusCircle className="text-gray-300" size={20} />
                 <span className="ml-4">Create Post</span>
@@ -53,6 +68,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <span className="ml-4">Contributors</span>
               </div>
             </Link>
+            {role === "admin" && (
+              <Link href="/dashboard/admin">
+                <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
+                  <Users className="text-gray-300" size={20} />
+                  <span className="ml-4">Admin Dashboard</span>
+                </div>
+              </Link>
+            )}
           </div>
         </nav>
 
