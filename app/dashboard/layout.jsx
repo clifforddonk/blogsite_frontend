@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }) {
       {/* Main Content Area */}
       <div className="flex-1 transition-all duration-300 ">
         <Header toggleSidebar={toggleSidebar} />
-        <main className="p-4">{children}</main>
+        <main className="p-2">{children}</main>
       </div>
     </div>
   );
