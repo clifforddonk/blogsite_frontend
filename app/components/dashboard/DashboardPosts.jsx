@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import postService from "@/app/utils/postSevice";
-import { getFilteredUsers } from "@/app/utils/authService"; // Import the auth service
+import { getFilteredUsers } from "@/app/utils/authService";
 import {
   FileText,
   Calendar,
@@ -24,25 +24,20 @@ export default function UserPostFeed() {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all"); // 'all' or 'my'
+  const [activeFilter, setActiveFilter] = useState("all");
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const fetchUserAndPosts = async () => {
       try {
-        // First get the current user
         const userObject = await getFilteredUsers();
         setCurrentUser(userObject);
 
-        // Then fetch all posts
         const response = await postService.getAllPosts();
-        // Sort posts by date (newest first)
         const sortedPosts = response.data.sort((a, b) => {
           return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
         });
         setPosts(sortedPosts);
-        console.log("Fetched posts:", sortedPosts);
-        console.log("Current user:", userObject);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -53,9 +48,7 @@ export default function UserPostFeed() {
     fetchUserAndPosts();
   }, []);
 
-  // Apply filters to posts
   const getFilteredPosts = () => {
-    // First filter by search term
     let filtered = posts.filter(
       (post) =>
         post.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -63,16 +56,10 @@ export default function UserPostFeed() {
         post.author?.username?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Then apply the My Posts filter if selected
     if (activeFilter === "my" && currentUser) {
       filtered = filtered.filter((post) => {
-        // Check if the post author matches current user
-        if (post.author && currentUser.username) {
-          return post.author.username === currentUser.username;
-        }
-        // Alternative check if IDs are available
-        if (post.author && post.author.id && currentUser.id) {
-          return post.author.id === currentUser.id;
+        if (post.author.id && currentUser?.id) {
+          return post.author.id === currentUser?.id;
         }
         return false;
       });
@@ -81,7 +68,6 @@ export default function UserPostFeed() {
     return filtered;
   };
 
-  // Format date
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown date";
     const date = new Date(dateString);
@@ -92,10 +78,8 @@ export default function UserPostFeed() {
     });
   };
 
-  // Format time since post
   const getTimeSince = (dateString) => {
     if (!dateString) return "";
-
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now - date) / 1000);
@@ -118,16 +102,13 @@ export default function UserPostFeed() {
     return Math.floor(seconds) + " seconds ago";
   };
 
-  // Truncate content for cards
   const truncateContent = (content, maxLength = 250) => {
     if (!content) return "";
     if (content.length <= maxLength) return content;
     return content.slice(0, maxLength) + "...";
   };
 
-  // Get author information
   const getAuthorInfo = (post) => {
-    // Prioritize post.author.username as requested
     if (post.author && post.author.username) {
       return post.author.username;
     } else {
@@ -135,18 +116,14 @@ export default function UserPostFeed() {
     }
   };
 
-  // Get author avatar
   const getAuthorAvatar = (post) => {
-    // Updated to prioritize matching structure with username
     if (post.author && post.author.avatar) {
       return post.author.avatar;
     } else {
-      // Return null to use the default avatar
       return null;
     }
   };
 
-  // Get filtered posts based on current filters
   const filteredPosts = getFilteredPosts();
 
   return (
@@ -169,8 +146,8 @@ export default function UserPostFeed() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              <div className="px-4 py-2  rounded-md text-sm bg-blue-600 text-white">
-                <Link href="/dashboard/user/create-post">New Post</Link>
+              <div className="px-4 py-2 rounded-md text-sm bg-blue-600 text-white">
+                <Link href="/dashboard/create-post">New Post</Link>
               </div>
             </div>
           </div>
@@ -252,27 +229,6 @@ export default function UserPostFeed() {
           </div>
         </div>
 
-        {/* Filter Status
-        <div className="bg-white rounded-lg shadow mb-4 p-4">
-          <div className="flex justify-between items-center">
-            <div className="text-sm">
-              <span className="font-medium">Viewing: </span>
-              <span className="text-blue-600">
-                {activeFilter === "all" ? "All Posts" : "My Posts"}
-                {searchTerm && ` matching "${searchTerm}"`}
-              </span>
-            </div>
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm("")}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X size={16} />
-              </button>
-            )}
-          </div>
-        </div> */}
-
         {/* Posts Feed */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 bg-white rounded-lg shadow">
@@ -309,13 +265,11 @@ export default function UserPostFeed() {
                       <div>
                         <div className="font-medium text-gray-900">
                           {getAuthorInfo(post)}
-                          {currentUser &&
-                            post.author &&
-                            post.author.username === currentUser.username && (
-                              <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
-                                You
-                              </span>
-                            )}
+                          {post.author.id === currentUser.id && (
+                            <span className="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                              You
+                            </span>
+                          )}
                         </div>
                         <div className="text-xs text-gray-500 flex items-center">
                           {post.createdAt ? getTimeSince(post.createdAt) : ""}
