@@ -37,7 +37,6 @@ const Page = ({ regUser }) => {
         router.push("/auth/login");
       }, 2000);
     } catch (err) {
-      console.error("Registration Error:", err);
       setError(err);
       setIsLoading(false);
     }
@@ -50,7 +49,7 @@ const Page = ({ regUser }) => {
         <div className="w-full lg:w-1/2 bg-indigo-600 p-8 flex flex-col justify-center items-center text-white">
           <div className="max-w-md text-center lg:text-left">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-              Welcome to MyBlog
+              Welcome to ByteBlog
             </h1>
             <p className="text-xl mb-8">
               Join our community of writers and readers today.

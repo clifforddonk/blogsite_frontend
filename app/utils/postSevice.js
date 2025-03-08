@@ -7,7 +7,6 @@ export const postService = {
       const response = await axiosInstance.get("/api/posts");
       return response.data;
     } catch (error) {
-      console.error("Error fetching posts:", error);
       return [];
     }
   },
@@ -18,7 +17,6 @@ export const postService = {
       const response = await axiosInstance.get(`/api/posts/author/${authorId}`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching posts by author:", error);
       return [];
     }
   },
@@ -29,7 +27,6 @@ export const postService = {
       const response = await axiosInstance.get(`/api/posts/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Error fetching post:", error);
       return null;
     }
   },
@@ -52,34 +49,20 @@ export const postService = {
 
       return response.data;
     } catch (error) {
-      console.error("Error creating post:", error.response?.data || error);
       return null;
     }
   },
   // Update an existing post (with optional new image/video)
-  updatePost: async (id, updatedData, imageFile = null, videoFile = null) => {
+  updatePost: async (id, updatedData) => {
     try {
       const formData = new FormData();
       formData.append("title", updatedData.title);
       formData.append("content", updatedData.content);
 
-      if (imageFile) {
-        formData.append("image", imageFile);
-      }
-
-      if (videoFile) {
-        formData.append("video", videoFile);
-      }
-
-      const response = await axiosInstance.put(`/api/posts/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosInstance.put(`/api/posts/${id}`, formData);
 
       return response.data;
     } catch (error) {
-      console.error("Error updating post:", error.response?.data || error);
       return null;
     }
   },
@@ -90,7 +73,6 @@ export const postService = {
       await axiosInstance.delete(`/api/posts/${id}`);
       return true;
     } catch (error) {
-      console.error("Error deleting post:", error.response?.data || error);
       return false;
     }
   },
@@ -104,7 +86,6 @@ export const postService = {
       });
       return response.data; // Return the updated user data
     } catch (error) {
-      console.error("Error Updating User:", error.response?.data || error);
       return false;
     }
   },
@@ -114,7 +95,6 @@ export const postService = {
       const response = await axiosInstance.delete(`/api/users/${id}`);
       return response.status === 200; // Ensure it returns true only on success
     } catch (error) {
-      console.error("Error deleting User:", error.response?.data || error);
       return false;
     }
   },

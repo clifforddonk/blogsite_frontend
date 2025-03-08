@@ -99,7 +99,6 @@ const ProfilePage = () => {
           setName(fetchedUser.username || "");
         }
       } catch (err) {
-        console.error("Error fetching user:", err);
       } finally {
         setLoading(false);
       }
@@ -138,7 +137,6 @@ const ProfilePage = () => {
         setSuccessModalOpen(true);
       }
     } catch (err) {
-      console.error("Error updating profile:", err);
       setModalMessage("An error occurred. Please try again later.");
       setSuccessModalOpen(true);
     } finally {
@@ -161,7 +159,6 @@ const ProfilePage = () => {
         router.push("/auth/login");
       }, 1500);
     } catch (err) {
-      console.error("Error deleting account:", err);
       // Still show success message and redirect anyway
       setDeleteModalOpen(false);
       setModalMessage("Account deleted successfully. Redirecting to login...");

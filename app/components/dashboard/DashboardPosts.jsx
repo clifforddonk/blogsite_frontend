@@ -16,16 +16,155 @@ import {
   Search,
   X,
   MoreHorizontal,
+  Loader,
+  Edit,
+  Save,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function UserPostFeed() {
+  const router = useRouter();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [currentUser, setCurrentUser] = useState(null);
+  // Add these state variables at the top of your component
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedContent, setEditedContent] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const handleDeletePost = async (id) => {
+    setIsDeleting(true);
+    const response = await postService.deletePost(id);
+
+    // Close delete confirmation modal
+    setDeleteModalOpen(false);
+
+    // Show success message
+    setModalMessage("Post deleted successfully");
+    setSuccessModalOpen(true);
+
+    // Wait a moment so user can see the success message
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 1500);
+
+    setIsDeleting(false);
+  };
+  // Add this function to your component
+  const handleUpdatePost = async () => {
+    if (!selectedPost || !editedTitle.trim() || !editedContent.trim()) {
+      // Show error or validation message
+      return;
+    }
+
+    try {
+      setIsUpdating(true);
+
+      const formData = {
+        title: editedTitle.trim(),
+        content: editedContent.trim(),
+      };
+
+      // Call your postService to update the post
+      const updatedPost = await postService.updatePost(
+        selectedPost.id,
+        formData
+      );
+
+      // Update the selected post with the new data
+      setSelectedPost({
+        ...selectedPost,
+        title: formData.title,
+        content: formData.content,
+      });
+
+      // Exit edit mode
+      setIsEditing(false);
+      setIsUpdating(false);
+
+      // Optional: Show success message
+      // toast.success("Post updated successfully");
+    } catch (error) {
+      console.error("Failed to update post:", error);
+      setIsUpdating(false);
+
+      // Optional: Show error message
+      // toast.error("Failed to update post. Please try again.");
+    }
+  };
+
+  const Modal = ({
+    title,
+    message,
+    isOpen,
+    onClose,
+    onConfirm,
+    confirmText,
+    cancelText,
+    isLoading,
+  }) => {
+    if (!isOpen) return null;
+
+    return (
+      <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{title}</h3>
+          <p className="text-gray-600 mb-4">{message}</p>
+          <div className="flex justify-end space-x-3">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md"
+              disabled={isLoading}
+            >
+              {cancelText || "Cancel"}
+            </button>
+            <button
+              onClick={onConfirm}
+              className="px-4 py-2 bg-red-600 text-white rounded-md"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                confirmText || "Confirm"
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const fetchUserAndPosts = async () => {
@@ -39,7 +178,6 @@ export default function UserPostFeed() {
         });
         setPosts(sortedPosts);
       } catch (error) {
-        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
@@ -440,14 +578,22 @@ export default function UserPostFeed() {
         )}
       </div>
 
-      {/* Post Detail Modal */}
       {selectedPost && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-y-auto">
           <div className="bg-white rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             <div className="border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 bg-white z-10">
-              <h2 className="text-xl font-semibold text-gray-900 truncate max-w-xl">
-                {selectedPost.title}
-              </h2>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                  className="text-xl font-semibold text-gray-900 border-b border-gray-300 focus:border-blue-500 focus:outline-none w-full"
+                />
+              ) : (
+                <h2 className="text-xl font-semibold text-gray-900 truncate max-w-xl">
+                  {selectedPost.title}
+                </h2>
+              )}
               <button
                 onClick={() => setSelectedPost(null)}
                 className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
@@ -501,9 +647,17 @@ export default function UserPostFeed() {
               </div>
 
               <div className="prose max-w-none mb-6">
-                <p className="whitespace-pre-line text-gray-700 leading-relaxed">
-                  {selectedPost.content}
-                </p>
+                {isEditing ? (
+                  <textarea
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[150px] text-gray-700 leading-relaxed"
+                  />
+                ) : (
+                  <p className="whitespace-pre-line text-gray-700 leading-relaxed">
+                    {selectedPost.content}
+                  </p>
+                )}
               </div>
 
               {/* Display Image */}
@@ -620,17 +774,89 @@ export default function UserPostFeed() {
                     Save
                   </button>
                 </div>
-                <div>
+                <div className="flex space-x-2">
+                  {/* Edit/Save buttons for post author */}
+                  {currentUser &&
+                    selectedPost.author &&
+                    selectedPost.author.username === currentUser.username && (
+                      <>
+                        {isEditing ? (
+                          <>
+                            <button
+                              onClick={handleUpdatePost}
+                              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center"
+                              disabled={isUpdating}
+                            >
+                              {isUpdating ? (
+                                <>
+                                  <Loader
+                                    size={16}
+                                    className="animate-spin mr-2"
+                                  />
+                                  Saving...
+                                </>
+                              ) : (
+                                <>
+                                  <Save size={16} className="mr-2" />
+                                  Save
+                                </>
+                              )}
+                            </button>
+                            <button
+                              onClick={() => {
+                                setIsEditing(false);
+                                setEditedTitle(selectedPost.title);
+                                setEditedContent(selectedPost.content);
+                              }}
+                              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                              disabled={isUpdating}
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setIsEditing(true);
+                              setEditedTitle(selectedPost.title);
+                              setEditedContent(selectedPost.content);
+                            }}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center"
+                          >
+                            <Edit size={16} className="mr-2" />
+                            Edit
+                          </button>
+                        )}
+                      </>
+                    )}
                   <button
-                    onClick={() => setSelectedPost(null)}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                    className="px-4 py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition"
+                    onClick={() => setDeleteModalOpen(true)}
                   >
-                    Close
+                    Delete
                   </button>
                 </div>
               </div>
             </div>
           </div>
+          <Modal
+            title="Delete Post"
+            message="Are you sure you want to delete this post? This action cannot be undone."
+            isOpen={deleteModalOpen}
+            onClose={() => setDeleteModalOpen(false)}
+            onConfirm={() => handleDeletePost(selectedPost?.id)}
+            confirmText="Delete Post"
+            cancelText="Cancel"
+            isLoading={isDeleting}
+          />
+          <Modal
+            title="Notification"
+            message={modalMessage}
+            isOpen={successModalOpen}
+            onClose={() => setSuccessModalOpen(false)}
+            onConfirm={() => setSuccessModalOpen(false)}
+            confirmText="OK"
+          />
         </div>
       )}
     </div>

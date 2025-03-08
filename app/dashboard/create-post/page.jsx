@@ -2,7 +2,16 @@
 import { useState, useEffect } from "react";
 import postService from "@/app/utils/postSevice";
 import { getFilteredUsers } from "@/app/utils/authService";
-import { Type, FileText, Image, Video, Send } from "lucide-react";
+import {
+  Type,
+  FileText,
+  Image,
+  Video,
+  Send,
+  CheckCircle,
+  X,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [formData, setFormData] = useState({ title: "", content: "" });
@@ -12,6 +21,9 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [imageName, setImageName] = useState("");
   const [videoName, setVideoName] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -40,7 +52,8 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
-      alert("User data is still loading...");
+      setErrorMessage("User data is still loading...");
+      setShowErrorModal(true);
       return;
     }
 
@@ -55,7 +68,7 @@ export default function Home() {
       );
 
       if (response) {
-        alert("Post created successfully!");
+        setShowSuccessModal(true);
         // Reset form after successful submission
         setFormData({ title: "", content: "" });
         setImage(null);
@@ -66,11 +79,16 @@ export default function Home() {
         throw new Error("Post creation failed");
       }
     } catch (error) {
-      alert("Failed to create post.");
+      setErrorMessage("Failed to create post.");
+      setShowErrorModal(true);
     } finally {
       setLoading(false);
     }
   };
+
+  // Close modals
+  const closeSuccessModal = () => setShowSuccessModal(false);
+  const closeErrorModal = () => setShowErrorModal(false);
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
@@ -84,7 +102,7 @@ export default function Home() {
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {/* Title Input */}
           <div className="space-y-2">
-            <label className=" text-sm font-medium text-gray-700 flex items-center">
+            <label className="text-sm font-medium text-gray-700 flex items-center">
               <Type className="w-4 h-4 mr-1" /> Title
             </label>
             <input
@@ -100,7 +118,7 @@ export default function Home() {
 
           {/* Content Textarea */}
           <div className="space-y-2">
-            <label className=" text-sm font-medium text-gray-700 flex items-center">
+            <label className="text-sm font-medium text-gray-700 flex items-center">
               <FileText className="w-4 h-4 mr-1" /> Content
             </label>
             <textarea
@@ -118,7 +136,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Image Upload */}
             <div className="space-y-2">
-              <label className=" text-sm font-medium text-gray-700 flex items-center">
+              <label className="text-sm font-medium text-gray-700 flex items-center">
                 <Image className="w-4 h-4 mr-1" /> Image (optional)
               </label>
               <div className="flex items-center">
@@ -150,7 +168,7 @@ export default function Home() {
 
             {/* Video Upload */}
             <div className="space-y-2">
-              <label className=" text-sm font-medium text-gray-700 flex items-center">
+              <label className="text-sm font-medium text-gray-700 flex items-center">
                 <Video className="w-4 h-4 mr-1" /> Video (optional)
               </label>
               <div className="flex items-center">
@@ -206,6 +224,68 @@ export default function Home() {
           )}
         </form>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+            <button
+              onClick={closeSuccessModal}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <X size={24} />
+            </button>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle size={40} className="text-green-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                Post Created Successfully!
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Your post has been published and is now visible to others.
+              </p>
+              <Link href="/dashboard">
+                <button
+                  onClick={closeSuccessModal}
+                  className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+                >
+                  Continue
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Error Modal */}
+      {showErrorModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
+            <button
+              onClick={closeErrorModal}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <X size={24} />
+            </button>
+
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <X size={40} className="text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Error</h3>
+              <p className="text-gray-600 mb-6">{errorMessage}</p>
+              <button
+                onClick={closeErrorModal}
+                className="px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

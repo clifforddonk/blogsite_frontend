@@ -40,9 +40,7 @@ export default function AdminDashBoard() {
           return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
         });
         setPosts(sortedPosts);
-        console.log("Fetched posts:", sortedPosts);
       } catch (error) {
-        console.error("Error fetching posts:", error);
       } finally {
         setLoading(false);
       }
@@ -218,7 +216,7 @@ export default function AdminDashBoard() {
             <h1 className="text-2xl font-semibold text-gray-900">
               Content Management
             </h1>
-            <Link href="/dashboard/user/create-post">
+            <Link href="/dashboard/create-post">
               <button className="px-4 py-2 bg-indigo-600 hover:cursor-pointer text-white rounded-md hover:bg-indigo-700 transition font-medium shadow-sm">
                 New Post
               </button>
@@ -320,6 +318,26 @@ export default function AdminDashBoard() {
                 <h3 className="text-2xl font-bold text-gray-900 mt-1">
                   {users?.length}
                 </h3>
+                <Link
+                  href="/dashboard/admin/users"
+                  className="mt-3 inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800"
+                >
+                  View all users
+                  <svg
+                    className="ml-1 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </Link>
               </div>
               <div className="p-2 bg-indigo-100 rounded-md">
                 <User size={20} className="text-gray-500" />

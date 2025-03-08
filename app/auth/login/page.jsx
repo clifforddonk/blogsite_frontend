@@ -33,7 +33,6 @@ const Page = () => {
         router.push("/dashboard");
       }, 2500);
     } catch (err) {
-      console.error("Login Error:", err);
       setError(err);
       setIsLoading(false);
     }
@@ -80,7 +79,7 @@ const Page = () => {
               <h2 className="text-3xl font-bold text-gray-800">
                 Log In To Your Account
               </h2>
-              <p className="text-gray-600 mt-2">Welcome back to MyBlog</p>
+              <p className="text-gray-600 mt-2">Welcome back to ByteBlog</p>
             </div>
 
             {/* Status Messages */}

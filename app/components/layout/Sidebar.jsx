@@ -1,5 +1,5 @@
 "use client";
-import { Home, PlusCircle, Users, LogOut } from "lucide-react";
+import { Home, PlusCircle, Users, LogOut, LayoutDashboard } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { getFilteredUsers } from "../../utils/authService";
@@ -25,7 +25,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   }, []);
 
   const role = user?.role;
-  console.log(role);
   return (
     <>
       {/* Sidebar Overlay (closes sidebar when clicked outside) */}
@@ -44,7 +43,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       >
         {/* Dashboard title */}
         <div className="p-6 flex items-center justify-between">
-          <h1 className="text-xl font-bold">My Blog</h1>
+          <h1 className="text-xl font-bold">ByteBlog</h1>
         </div>
 
         {/* Navigation */}
@@ -71,7 +70,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             {role === "admin" && (
               <Link href="/dashboard/admin">
                 <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
-                  <Users className="text-gray-300" size={20} />
+                  <LayoutDashboard className="text-gray-300" size={20} />
                   <span className="ml-4">Admin Dashboard</span>
                 </div>
               </Link>

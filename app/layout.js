@@ -8,7 +8,7 @@ const nunito = Nunito({
 });
 
 export const metadata = {
-  title: "My Blog",
+  title: "ByteBlog",
   description: "A mordern blog site",
 };
 
