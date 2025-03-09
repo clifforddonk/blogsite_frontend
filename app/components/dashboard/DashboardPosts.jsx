@@ -758,9 +758,9 @@ export default function UserPostFeed() {
               </div>
             </div>
 
-            <div className="border-t border-gray-200 px-6 py-4 bg-gray-50 sticky bottom-0">
+            <div className="border-t border-gray-200 px-4 py-4 bg-gray-50 sticky bottom-0">
               <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center space-x-2">
                   <button className="flex items-center text-gray-600 hover:text-blue-600">
                     <ThumbsUp size={20} className="mr-1" />
                     Like
@@ -784,7 +784,7 @@ export default function UserPostFeed() {
                           <>
                             <button
                               onClick={handleUpdatePost}
-                              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center"
+                              className="px-2 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center"
                               disabled={isUpdating}
                             >
                               {isUpdating ? (
@@ -808,7 +808,7 @@ export default function UserPostFeed() {
                                 setEditedTitle(selectedPost.title);
                                 setEditedContent(selectedPost.content);
                               }}
-                              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                              className="px-2 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
                               disabled={isUpdating}
                             >
                               Cancel
@@ -831,7 +831,9 @@ export default function UserPostFeed() {
                     )}
                   {currentUser.id === selectedPost.author.id && (
                     <button
-                      className="px-2 py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition"
+                      className={`px-2 ${
+                        isEditing && "hidden"
+                      }  py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition`}
                       onClick={() => setDeleteModalOpen(true)}
                     >
                       Delete
