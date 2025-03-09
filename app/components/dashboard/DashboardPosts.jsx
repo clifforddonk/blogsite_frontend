@@ -829,12 +829,14 @@ export default function UserPostFeed() {
                         )}
                       </>
                     )}
-                  <button
-                    className="px-4 py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition"
-                    onClick={() => setDeleteModalOpen(true)}
-                  >
-                    Delete
-                  </button>
+                  {currentUser.id === selectedPost.author.id && (
+                    <button
+                      className="px-4 py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition"
+                      onClick={() => setDeleteModalOpen(true)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
