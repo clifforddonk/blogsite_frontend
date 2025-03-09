@@ -760,7 +760,7 @@ export default function UserPostFeed() {
 
             <div className="border-t border-gray-200 px-6 py-4 bg-gray-50 sticky bottom-0">
               <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-1">
                   <button className="flex items-center text-gray-600 hover:text-blue-600">
                     <ThumbsUp size={20} className="mr-1" />
                     Like
@@ -821,7 +821,7 @@ export default function UserPostFeed() {
                               setEditedTitle(selectedPost.title);
                               setEditedContent(selectedPost.content);
                             }}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center"
+                            className="px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center"
                           >
                             <Edit size={16} className="mr-2" />
                             Edit
@@ -831,7 +831,7 @@ export default function UserPostFeed() {
                     )}
                   {currentUser.id === selectedPost.author.id && (
                     <button
-                      className="px-4 py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition"
+                      className="px-2 py-2 border bg-red-500 border-gray-300  text-white rounded-md cursor-pointer transition"
                       onClick={() => setDeleteModalOpen(true)}
                     >
                       Delete
