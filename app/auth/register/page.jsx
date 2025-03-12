@@ -46,7 +46,7 @@ const Page = ({ regUser }) => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100">
       <div className="flex flex-col lg:flex-row min-h-screen">
         {/* Left Section - Hero/Landing Area */}
-        <div className="w-full lg:w-1/2 bg-indigo-600 p-8 flex flex-col justify-center items-center text-white">
+        <div className="w-full lg:w-1/2 bg-indigo-600 px-5 py-12 rounded-br-xl rounded-bl-xl flex flex-col justify-center items-center text-white">
           <div className="max-w-md text-center lg:text-left">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
               Welcome to ByteBlog
@@ -55,17 +55,17 @@ const Page = ({ regUser }) => {
               Join our community of writers and readers today.
             </p>
 
-            <div className="space-y-6 mb-8">
+            <div className="space-y-6">
               <div className="flex items-center">
-                <CheckCircle className="h-6 w-6 mr-4" />
+                <CheckCircle className="h-6 w-6 mr-3" />
                 <p className="text-lg">Share your stories with the world</p>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="h-6 w-6 mr-4" />
+                <CheckCircle className="h-6 w-6 mr-3" />
                 <p className="text-lg">Connect with like-minded individuals</p>
               </div>
               <div className="flex items-center">
-                <CheckCircle className="h-6 w-6 mr-4" />
+                <CheckCircle className="h-6 w-6 mr-3" />
                 <p className="text-lg">
                   Discover content tailored to your interests
                 </p>
