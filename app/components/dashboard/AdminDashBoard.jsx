@@ -202,8 +202,8 @@ export default function AdminDashBoard() {
 
     // Wait a moment so user can see the success message
     setTimeout(() => {
-      router.push("/dashboard");
-    }, 1500);
+      window.location.reload();
+    }, 200);
 
     setIsDeleting(false);
   };

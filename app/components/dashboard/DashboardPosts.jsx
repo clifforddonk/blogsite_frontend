@@ -54,8 +54,8 @@ export default function UserPostFeed() {
 
     // Wait a moment so user can see the success message
     setTimeout(() => {
-      router.push("/dashboard");
-    }, 1500);
+      window.location.reload();
+    }, 200);
 
     setIsDeleting(false);
   };
@@ -218,9 +218,14 @@ export default function UserPostFeed() {
 
   const getTimeSince = (dateString) => {
     if (!dateString) return "";
+
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Invalid date";
+
     const now = new Date();
-    const seconds = Math.floor((now - date) / 1000);
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (seconds < 0) return "Just now"; // Fix negative time issue
 
     let interval = seconds / 31536000;
     if (interval > 1) return Math.floor(interval) + " years ago";

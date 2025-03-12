@@ -7,10 +7,11 @@ import Link from "next/link";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const router = useRouter();
-  const [user, setUser] = useState(null); // Store a single user object
+  const [user, setUser] = useState(null);
+
   const logoutUser = () => {
     localStorage.removeItem("token");
-    router.push("/auth/login"); // Redirect to login page after logout
+    router.push("/auth/login");
   };
 
   useEffect(() => {
@@ -24,62 +25,83 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     fetchFilteredUser();
   }, []);
 
+  // Function to handle navigation and close sidebar on mobile
+  const handleNavigation = (path) => {
+    if (window.innerWidth < 1024) {
+      // Check if on mobile
+      toggleSidebar();
+    }
+    router.push(path);
+  };
+
   const role = user?.role;
+
   return (
     <>
-      {/* Sidebar Overlay (closes sidebar when clicked outside) */}
+      {/* Sidebar Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 lg:hidden z-10"
+          className="fixed inset-0 bg-black/50 lg:hidden z-10 transition-opacity duration-300"
           onClick={toggleSidebar}
         />
       )}
 
       {/* Sidebar */}
       <div
-        className={`fixed lg:sticky top-0 left-0 h-full lg:h-screen bg-gray-800 text-white z-20 transform transition-all duration-300 ${
-          isOpen ? "w-72" : "w-0 lg:w-64"
-        } overflow-y-auto lg:overflow-y-visible lg:translate-x-0`}
+        className={`fixed lg:sticky top-0 left-0 h-full md:h-screen bg-gray-800 text-white z-20 transition-all duration-300 ease-in-out shadow-lg
+          ${
+            isOpen
+              ? "translate-x-0 w-72"
+              : "-translate-x-full lg:translate-x-0 w-0 lg:w-64"
+          }
+          overflow-hidden lg:overflow-y-auto`}
       >
         {/* Dashboard title */}
-        <div className="p-6 flex items-center justify-between">
+        <div className="p-6 flex items-center justify-between border-b border-gray-700">
           <h1 className="text-xl font-bold">ByteBlog</h1>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1">
-          <div className="space-y-2 px-2">
-            <Link href="/dashboard">
-              <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
-                <Home className="text-gray-300" size={20} />
-                <span className="ml-4">Posts</span>
-              </div>
-            </Link>
-            <Link href="/dashboard/create-post">
-              <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
-                <PlusCircle className="text-gray-300" size={20} />
-                <span className="ml-4">Create Post</span>
-              </div>
-            </Link>
-            <Link href="/dashboard/contributors">
-              <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
-                <Users className="text-gray-300" size={20} />
-                <span className="ml-4">Contributors</span>
-              </div>
-            </Link>
+        <nav className="flex-1 mt-4">
+          <div className="space-y-1 px-2">
+            <div
+              onClick={() => handleNavigation("/dashboard")}
+              className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+            >
+              <Home className="text-gray-300" size={20} />
+              <span className="ml-4">Posts</span>
+            </div>
+
+            <div
+              onClick={() => handleNavigation("/dashboard/create-post")}
+              className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+            >
+              <PlusCircle className="text-gray-300" size={20} />
+              <span className="ml-4">Create Post</span>
+            </div>
+
+            <div
+              onClick={() => handleNavigation("/dashboard/contributors")}
+              className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+            >
+              <Users className="text-gray-300" size={20} />
+              <span className="ml-4">Contributors</span>
+            </div>
+
             {role === "admin" && (
-              <Link href="/dashboard/admin">
-                <div className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200">
-                  <LayoutDashboard className="text-gray-300" size={20} />
-                  <span className="ml-4">Admin Dashboard</span>
-                </div>
-              </Link>
+              <div
+                onClick={() => handleNavigation("/dashboard/admin")}
+                className="flex items-center p-3 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+              >
+                <LayoutDashboard className="text-gray-300" size={20} />
+                <span className="ml-4">Admin Dashboard</span>
+              </div>
             )}
           </div>
         </nav>
 
         {/* Logout Button */}
-        <div className="sticky bottom-0 bg-gray-800 w-full p-2">
+        <div className="sticky bottom-0 bg-gray-800 w-full p-2 border-t border-gray-700 mt-auto">
           <button
             onClick={logoutUser}
             className="flex items-center w-full p-3 rounded-md hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
