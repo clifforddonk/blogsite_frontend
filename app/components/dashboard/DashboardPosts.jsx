@@ -270,10 +270,10 @@ export default function UserPostFeed() {
   const filteredPosts = getFilteredPosts();
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen w-full">
       {/* Top Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl  mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3">
             <h1 className="text-xl font-semibold text-gray-900">My Feed</h1>
             <div className="flex items-center gap-4">
@@ -299,7 +299,7 @@ export default function UserPostFeed() {
 
       {/* Mobile Search */}
       <div className="bg-white border-b border-gray-200 sm:hidden">
-        <div className="max-w-3xl mx-auto px-4 py-2">
+        <div className="max-w-3xl  mx-auto px-4 py-2">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search size={16} className="text-gray-400" />
@@ -315,7 +315,7 @@ export default function UserPostFeed() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div className="max-w-3xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
         {/* Filter Buttons */}
         <div className="bg-white rounded-lg shadow mb-4 p-4">
           <div className="flex justify-center sm:justify-start space-x-2">

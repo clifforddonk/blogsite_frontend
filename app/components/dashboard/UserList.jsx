@@ -25,8 +25,8 @@ const UserList = ({ name }) => {
   }, []);
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="container mx-auto p- max-w-4xl w-full">
+      <div className="bg-white rounded-lg sh4adow-md overflow-hidden">
         <div className="bg-indigo-600 px-6 py-4">
           <h1 className="text-xl font-bold text-white">{name}</h1>
         </div>
@@ -38,7 +38,7 @@ const UserList = ({ name }) => {
         ) : error ? (
           <div className="p-6 text-red-500 text-center">{error}</div>
         ) : (
-          <div>
+          <div className="">
             {users.length > 0 ? (
               <ul className="divide-y divide-gray-200">
                 {users.map((user) => (
