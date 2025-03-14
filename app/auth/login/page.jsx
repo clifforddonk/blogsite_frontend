@@ -42,7 +42,7 @@ const Page = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100">
       <div className="flex flex-col lg:flex-row min-h-screen">
         {/* Left Section - Hero/Landing Area */}
-        <div className="w-full lg:w-1/2 bg-indigo-600 py-10 rounded-br-xl rounded-bl-xl flex flex-col justify-center items-center text-white">
+        <div className="w-full lg:w-1/2 bg-indigo-600 py-10  flex flex-col justify-center items-center text-white">
           <div className="max-w-md text-center lg:text-left">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
               Welcome Back
