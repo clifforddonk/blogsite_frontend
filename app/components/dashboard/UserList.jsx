@@ -42,7 +42,7 @@ const UserList = ({ name }) => {
             {users.length > 0 ? (
               <ul className="divide-y divide-gray-200">
                 {users.map((user) => (
-                  <li key={user.email} className="hover:bg-gray-50">
+                  <li key={user.id} className="hover:bg-gray-50">
                     <div className="px-6 py-4 flex items-center">
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
@@ -55,9 +55,9 @@ const UserList = ({ name }) => {
                         <div className="font-medium text-gray-900">
                           {user.username}
                         </div>
-                        <div className="text-gray-500 text-sm">
+                        {/* <div className="text-gray-500 text-sm">
                           {user.email}
-                        </div>
+                        </div> */}
                       </div>
                       <div>
                         <button className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
