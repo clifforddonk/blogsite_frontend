@@ -365,9 +365,25 @@ export default function AdminDashBoard() {
 
         {/* Post List or Grid */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-16 bg-white rounded-lg shadow-sm">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500 mb-4"></div>
-            <p className="text-gray-500">Loading your content...</p>
+          <div className="flex justify-center items-center h-40 bg-white">
+            <div className="text-center p-8 rounded-lg">
+              <div className="flex justify-center mb-4">
+                {/* Animated circles */}
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-4 w-4 bg-blue-500 rounded-full mx-1 opacity-75"
+                    style={{
+                      animation: `bounce 1.4s infinite ease-in-out both`,
+                      animationDelay: `${i * 0.16}s`,
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="text-gray-500 font-medium">
+                Loading Your Content...
+              </div>
+            </div>
           </div>
         ) : filteredPosts.length > 0 ? (
           viewMode === "grid" ? (

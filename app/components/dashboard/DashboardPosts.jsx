@@ -348,8 +348,9 @@ export default function UserPostFeed() {
             <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mr-3">
               <User size={20} className="text-gray-500" />
             </div>
+
             <button className="flex-1 text-left px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-500 text-sm">
-              Start a post...
+              <Link href="/dashboard/create-post">Start a post...</Link>
             </button>
           </div>
           <div className="flex justify-between mt-3 pt-3 border-t border-gray-100">
@@ -374,9 +375,23 @@ export default function UserPostFeed() {
 
         {/* Posts Feed */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-16 bg-white rounded-lg shadow">
-            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-            <p className="text-gray-500 text-sm">Loading posts...</p>
+          <div className="flex justify-center items-center h-40 bg-white">
+            <div className="text-center p-8 rounded-lg">
+              <div className="flex justify-center mb-4">
+                {/* Animated circles */}
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-4 w-4 bg-blue-500 rounded-full mx-1 opacity-75"
+                    style={{
+                      animation: `bounce 1.4s infinite ease-in-out both`,
+                      animationDelay: `${i * 0.16}s`,
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="text-gray-500 font-medium">Loading Posts...</div>
+            </div>
           </div>
         ) : filteredPosts.length > 0 ? (
           <div className="space-y-4">

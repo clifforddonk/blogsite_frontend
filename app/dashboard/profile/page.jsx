@@ -172,12 +172,24 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-50">
-        <div className="p-8 bg-white rounded-xl shadow-xl text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600 font-medium">
-            Loading your profile...
-          </p>
+      <div className="flex justify-center items-center h-40 bg-white ">
+        <div className="text-center p-8 rounded-lg">
+          <div className="flex justify-center mb-4">
+            {/* Animated circles */}
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-4 w-4 bg-blue-500 rounded-full mx-1 opacity-75"
+                style={{
+                  animation: `bounce 1.4s infinite ease-in-out both`,
+                  animationDelay: `${i * 0.16}s`,
+                }}
+              />
+            ))}
+          </div>
+          <div className="text-gray-500 font-medium">
+            Loading Your Profile...
+          </div>
         </div>
       </div>
     );

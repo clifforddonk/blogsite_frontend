@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff; /* Force white background */
+  --background: #ffffffe1; /* Force white background */
   --foreground: #171717; /* Set text color to dark */
 }
 
@@ -9,4 +9,15 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-nunito), sans-serif;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
 }
