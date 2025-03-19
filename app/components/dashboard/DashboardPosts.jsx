@@ -447,22 +447,20 @@ export default function UserPostFeed() {
                     {post.title}
                   </h3>
                 </div>
-
                 {/* Post Content Preview */}
                 <div
-                  className="px-4 pb-1 cursor-pointer"
+                  className="px-4 pb-1 cursor-pointer mb-2"
                   onClick={() => setSelectedPost(post)}
                 >
                   <p className="text-gray-600 whitespace-pre-line">
                     {truncateContent(post.content)}
                     {post.content && post.content.length > 250 && (
-                      <span className="text-blue-600 font-medium cursor-pointer ml-1">
+                      <span className="text-blue-600 font-medium cursor-pointer ml-1 ">
                         See more
                       </span>
                     )}
                   </p>
                 </div>
-
                 {/* Post Media */}
                 {(post.imageUrl || post.videoUrl) && (
                   <div
@@ -509,9 +507,8 @@ export default function UserPostFeed() {
                     )}
                   </div>
                 )}
-
                 {/* Engagement Stats */}
-                <div className="px-4 py-1 mt-1">
+                {/* <div className="px-4 py-1 mt-1">
                   <div className="flex justify-between text-xs text-gray-500">
                     <div className="flex items-center">
                       <div className="flex -space-x-1 mr-2">
@@ -532,10 +529,9 @@ export default function UserPostFeed() {
                       )}
                     </div>
                   </div>
-                </div>
-
+                </div> */}
                 {/* Action Buttons */}
-                <div className="px-2 py-1 border-t border-gray-100">
+                {/* <div className="px-2 py-1 border-t border-gray-100">
                   <div className="flex justify-between">
                     <button className="flex items-center justify-center py-2 px-3 hover:bg-gray-100 rounded-md flex-1 text-gray-600 text-sm">
                       <ThumbsUp size={18} className="mr-2" />
@@ -556,8 +552,8 @@ export default function UserPostFeed() {
                       <Bookmark size={18} className="mr-2" />
                       Save
                     </button>
-                  </div>
-                </div>
+                  </div> */}
+                {/* </div> */}
               </div>
             ))}
           </div>
@@ -711,12 +707,12 @@ export default function UserPostFeed() {
 
               {/* Comments section */}
               <div className="mt-8 pt-6 border-t border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                {/* <h3 className="text-lg font-medium text-gray-900 mb-4">
                   Comments
-                </h3>
+                </h3> */}
 
                 {/* Comment input */}
-                <div className="flex items-start mb-6">
+                {/* <div className="flex items-start mb-6">
                   <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden mr-3 flex-shrink-0">
                     <User size={20} className="text-gray-500" />
                   </div>
@@ -740,10 +736,10 @@ export default function UserPostFeed() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Placeholder for comments */}
-                {selectedPost.comments && selectedPost.comments.length > 0 ? (
+                {/* {selectedPost.comments && selectedPost.comments.length > 0 ? (
                   <div className="space-y-4">
                     {selectedPost.comments.map((comment, idx) => (
                       <div key={idx} className="flex">
@@ -774,13 +770,13 @@ export default function UserPostFeed() {
                   <div className="text-center py-6 text-gray-500 text-sm">
                     No comments yet. Be the first to comment!
                   </div>
-                )}
+                )} */}
               </div>
             </div>
 
             <div className="border-t border-gray-200 px-4 py-4 bg-gray-50 sticky bottom-0">
               <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <button className="flex items-center text-gray-600 hover:text-blue-600">
                     <ThumbsUp size={20} className="mr-1" />
                     Like
@@ -793,7 +789,7 @@ export default function UserPostFeed() {
                     <Bookmark size={20} className="mr-1" />
                     Save
                   </button>
-                </div>
+                </div> */}
                 <div className="flex space-x-2">
                   {/* Edit/Save buttons for post author */}
                   {currentUser &&
