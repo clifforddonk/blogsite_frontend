@@ -434,9 +434,10 @@ export default function UserPostFeed() {
                         </div>
                       </div>
                     </div>
-                    <button className="text-gray-400 hover:text-gray-600">
+                    {/* Three dots */}
+                    {/* <button className="text-gray-400 hover:text-gray-600">
                       <MoreHorizontal size={20} />
-                    </button>
+                    </button> */}
                   </div>
 
                   {/* Post Title */}
