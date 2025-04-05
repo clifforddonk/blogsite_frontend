@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import FadeInSection from "@/app/components/layout/FadeInSection";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("all");
@@ -144,33 +146,42 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section
+      <FadeInSection
         id="home"
         className="py-20 bg-gradient-to-r from-indigo-600 to-blue-500 text-white"
       >
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-10 md:mb-0">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Hi, I'm Clifford Donkor
-            </h2>
-            <h3 className="text-2xl md:text-3xl mb-6">Full Stack Developer</h3>
-            <p className="text-lg mb-8">
-              I build exceptional digital experiences with modern technologies.
-            </p>
-            <div className="flex space-x-4">
-              <a
-                href="#contact"
-                className="bg-white text-indigo-600 px-6 py-3 rounded-md font-semibold hover:bg-opacity-90 transition"
-              >
-                Contact Me
-              </a>
-              <a
-                href="#projects"
-                className="border border-white text-white px-6 py-3 rounded-md font-semibold hover:bg-white hover:bg-opacity-10 transition"
-              >
-                View Work
-              </a>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Hi, I'm Clifford Donkor
+              </h2>
+              <h3 className="text-2xl md:text-3xl mb-6">
+                Full Stack Developer
+              </h3>
+              <p className="text-lg mb-8">
+                I build exceptional digital experiences with modern
+                technologies.
+              </p>
+              <div className="flex space-x-4">
+                <a
+                  href="#contact"
+                  className="bg-white text-indigo-600 px-6 py-3 rounded-md font-semibold hover:bg-opacity-90 transition"
+                >
+                  Contact Me
+                </a>
+                <a
+                  href="#projects"
+                  className="border border-white text-white px-6 py-3 rounded-md font-semibold hover:bg-white hover:bg-opacity-10 transition"
+                >
+                  View Work
+                </a>
+              </div>
+            </motion.div>
           </div>
           <div className="md:w-1/2 flex justify-center">
             <div className="w-64 h-72 rounded-full bg-white p-2">
@@ -183,62 +194,69 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">About Me</h2>
-          <div className="flex flex-col md:flex-row items-center md:space-x-12">
-            <div className="md:w-1/3 mb-8 md:mb-0">
-              <div className="rounded-lg overflow-hidden shadow-lg bg-gray-100 h-80 flex items-center justify-center">
-                <img src="/profile.jpg" alt="About Image" />
+      <FadeInSection id="about" className="py-20 bg-white">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+        >
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">About Me</h2>
+            <div className="flex flex-col md:flex-row items-center md:space-x-12">
+              <div className="md:w-1/3 mb-8 md:mb-0">
+                <div className="rounded-lg overflow-hidden shadow-lg bg-gray-100 h-80 flex items-center justify-center">
+                  <img src="/profile.jpg" alt="About Image" />
+                </div>
               </div>
-            </div>
-            <div className="md:w-2/3">
-              <p className="text-lg text-gray-700 mb-6">
-                I'm a passionate Full Stack Developer with expertise in building
-                modern web applications. With over X years of experience in the
-                industry, I've worked on various projects ranging from small
-                business websites to complex enterprise applications.
-              </p>
-              <p className="text-lg text-gray-700 mb-6">
-                My approach to development focuses on creating clean, efficient,
-                and maintainable code while delivering exceptional user
-                experiences. I enjoy solving complex problems and continuously
-                learning new technologies.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="#"
-                  className="bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition"
-                >
-                  Download Resume
-                </a>
-                <a
-                  href="https://github.com/clifforddonk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://linkedin.com/in/yourusername"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
-                >
-                  LinkedIn
-                </a>
+              <div className="md:w-2/3">
+                <p className="text-lg text-gray-700 mb-6">
+                  I'm a passionate Full Stack Developer with expertise in
+                  building modern web applications. With over X years of
+                  experience in the industry, I've worked on various projects
+                  ranging from small business websites to complex enterprise
+                  applications.
+                </p>
+                <p className="text-lg text-gray-700 mb-6">
+                  My approach to development focuses on creating clean,
+                  efficient, and maintainable code while delivering exceptional
+                  user experiences. I enjoy solving complex problems and
+                  continuously learning new technologies.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="#"
+                    className="bg-gray-200 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-300 transition"
+                  >
+                    Download Resume
+                  </a>
+                  <a
+                    href="https://github.com/clifforddonk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-800 text-white px-4 py-2 rounded-full hover:bg-gray-700 transition"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/yourusername"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </FadeInSection>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-gray-50">
+      <FadeInSection id="skills" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">My Skills</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -260,10 +278,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white">
+      <FadeInSection id="projects" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-6">My Projects</h2>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
@@ -332,7 +350,7 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4">{project.de40scription}</p>
+                  <p className="text-gray-600 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, i) => (
                       <span
@@ -364,10 +382,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
+      <FadeInSection id="contact" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Get In Touch</h2>
           <div className="flex flex-col md:flex-row gap-12 max-w-5xl mx-auto">
@@ -559,7 +577,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
