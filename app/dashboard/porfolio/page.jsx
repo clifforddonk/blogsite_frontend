@@ -53,12 +53,12 @@ export default function Home() {
   const skills = [
     { name: "JavaScript", level: 90 },
     { name: "React", level: 85 },
-    { name: "Node.js", level: 80 },
-    { name: "Next.js", level: 75 },
-    { name: "Java", level: 70 },
+    { name: "Next.js", level: 80 },
+    { name: "Git", level: 75 },
+    { name: "Java(SpringBoot)", level: 70 },
     { name: "MongoDB", level: 75 },
-    { name: "CSS/SCSS", level: 85 },
-    { name: "HTML", level: 95 },
+    { name: "MySQL", level: 85 },
+    { name: "REST Api", level: 95 },
   ];
 
   const filteredProjects =
