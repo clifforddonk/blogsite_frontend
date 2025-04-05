@@ -15,6 +15,8 @@ export default function Home() {
       image: "/byteblogg1.png",
       category: "fullstack",
       technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      link: "https://byteblogg.vercel.app/",
+      code: "https://github.com/clifforddonk/blogsite_frontend",
     },
     {
       id: 2,
@@ -23,6 +25,8 @@ export default function Home() {
       image: "/byteblogg1.png",
       category: "frontend",
       technologies: ["React", "OpenWeather API", "Mapbox", "CSS"],
+      link: "",
+      code: "",
     },
     {
       id: 3,
@@ -31,6 +35,8 @@ export default function Home() {
       image: "/byteblogg1.png",
       category: "backend",
       technologies: ["Express", "MongoDB", "JWT", "Docker"],
+      link: "",
+      code: "",
     },
     {
       id: 4,
@@ -39,6 +45,8 @@ export default function Home() {
       image: "/byteblogg1.png",
       category: "frontend",
       technologies: ["Next.js", "Tailwind CSS", "Framer Motion"],
+      link: "",
+      code: "",
     },
   ];
 
@@ -165,11 +173,11 @@ export default function Home() {
             </div>
           </div>
           <div className="md:w-1/2 flex justify-center">
-            <div className="w-64 h-64 rounded-full bg-white p-2">
+            <div className="w-64 h-72 rounded-full bg-white p-2">
               <div className="w-full h-full rounded-full overflow-hidden bg-gray-200 relative">
                 {/* Replace with your image */}
                 <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                  Profile Image
+                  <img src="/passport pic.jpg" alt="About Image" />
                 </div>
               </div>
             </div>
@@ -184,8 +192,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center md:space-x-12">
             <div className="md:w-1/3 mb-8 md:mb-0">
               <div className="rounded-lg overflow-hidden shadow-lg bg-gray-100 h-80 flex items-center justify-center">
-                {/* Replace with your image */}
-                <div className="text-gray-400">About Image</div>
+                <img src="/profile.jpg" alt="About Image" />
               </div>
             </div>
             <div className="md:w-2/3">
@@ -319,11 +326,13 @@ export default function Home() {
               >
                 <div className="h-48 bg-gray-200 flex items-center justify-center">
                   {/* Replace with project image */}
-                  <div className="text-gray-400">Project Image</div>
+                  <div className="text-gray-400">
+                    <img src={`${project.image}`} />
+                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2">{project.title}</h3>
-                  <p className="text-gray-600 mb-4">{project.description}</p>
+                  <p className="text-gray-600 mb-4">{project.de40scription}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.technologies.map((tech, i) => (
                       <span
@@ -336,14 +345,16 @@ export default function Home() {
                   </div>
                   <div className="flex space-x-3">
                     <a
-                      href="#"
+                      href={`${project.link}`}
                       className="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+                      target="_blank"
                     >
                       View Project
                     </a>
                     <a
-                      href="#"
+                      href={`${project.code}`}
                       className="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+                      target="_blank"
                     >
                       Source Code
                     </a>
@@ -437,7 +448,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-medium">Email</h4>
-                      <p className="text-gray-600">your.email@example.com</p>
+                      <p className="text-gray-600">clifforddonk@gmail.com</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -459,7 +470,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-medium">Phone</h4>
-                      <p className="text-gray-600">+1 (123) 456-7890</p>
+                      <p className="text-gray-600">+233 535 563 779</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -487,7 +498,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-medium">Location</h4>
-                      <p className="text-gray-600">City, Country</p>
+                      <p className="text-gray-600">Accra, Ghana</p>
                     </div>
                   </div>
                 </div>
@@ -555,12 +566,12 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <h2 className="text-2xl font-bold">Your Name</h2>
+              <h2 className="text-2xl font-bold">Clifford Donkor</h2>
               <p className="text-gray-400">Full Stack Developer</p>
             </div>
             <div className="text-center md:text-right">
               <p>
-                &copy; {new Date().getFullYear()} Your Name. All rights
+                &copy; {new Date().getFullYear()} Clifford Donkor. All rights
                 reserved.
               </p>
               <p className="text-gray-400">Made with Next.js</p>
